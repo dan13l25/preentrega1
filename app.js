@@ -1,41 +1,16 @@
 import express from express
-import UUID from "node:crypto"
-import fs from "fs"
+import { ProductManager } from "./productManager"
+import { productRouter } from "./routes/productRoute.js"
 
 const app = express()
 const port = 8080
 
-app.use(express.urlencoded({extended:true}))
+export const productManager = new productManager
+
+app.use("/api/product", productRouter)
+app.use("/api/cart", productRouter)
 app.use(express.json())
 
-app.get("/api/products", () =>{
-
-})
-
-app.get("/api/products/:pid", () =>{
-
-})
-
-app.post("/api/products", () =>{
-
-})
-
-app.put("/api/products/:pid", () =>{
-
-})
-
-app.delete("/api/products/:pid", () =>{
-
-})
-
-app.post("/api/carts/", () =>{
-
-})
-
-app.get("/api/carts/:cid/", () =>{
-
-})
-
-app.post("/api/carts/:cid/product/:pid", () =>{
-
+app.listen(port, (req,res) =>{
+    console.log("servidor funcionando en puerto ${port}")
 })
