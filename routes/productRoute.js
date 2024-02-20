@@ -42,7 +42,7 @@ productRouter.post("/api/product", async(req,res) =>{
     }
 })
 
-productRouter.put("/api/product/:pid", () =>{
+productRouter.put("/api/product/:pid", async(req,res) =>{
 
 })
 
