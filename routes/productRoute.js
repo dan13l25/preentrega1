@@ -1,13 +1,12 @@
 import { Router } from "express"
-import { ProductManager } from "../productManager.js"
-import { productManager } from "../app"
+import { productManager } from "../app.js"
 
 const productRouter = Router()
 
-productRouter.get("/api/product", async(req,res) =>{
+productRouter.get("/", async(req,res) =>{
     try{
         const {limit} = req.query
-        const product = productManager.getProduct()
+        const product = await productManager.getProduct()
 
         if(limit){
             const limitProduct = product.slice(0, limit)
@@ -20,10 +19,10 @@ productRouter.get("/api/product", async(req,res) =>{
     }
 })
 
-productRouter.get("/api/product/:pid", async(req,res) =>{
+productRouter.get("/", async(req,res) =>{
     try{
         const {pid} = req.params
-        const product = productManager.getProductById(pid)
+        const product = await productManager.getProductById(pid)
         res.json(product)
     }catch (error){
         console.log(error)
@@ -33,21 +32,38 @@ productRouter.get("/api/product/:pid", async(req,res) =>{
 
 productRouter.post("/api/product", async(req,res) =>{
     try{
-        const {title, description, price, thumbnail, code, stock, status, category, id} = req.body
+        const {title, description, price, thumbnail, code, stock, status, category} = req.body
         const post = await productManager.addProduct({title, description, price, thumbnail, code, stock, status, category, id})
         res.json(post)
     }catch(error){
         console.log(error)
-        res.send("error al recibir el ID del producto")
+        res.send("error agregar producto")
     }
 })
 
-productRouter.put("/api/product/:pid", async(req,res) =>{
-
+productRouter.put("/update/:pid", async(req,res) =>{
+    const {pid} = req.params
+    
+    try{
+        const {title, description, price, thumbnail, code, stock, status, category } = req.body
+        const response = await productManager.updateProduct({title, description, price, thumbnail, code, stock, status, category, id})
+        res.json(response)
+    }catch(error){
+        console.log(error)
+        res.send("error al actualizar producto")
+    }
 })
 
-productRouter.delete("/api/product/:pid", () =>{
+productRouter.delete("/delete/:pid", async(req,res) =>{
+    const {pid} = req.params
 
+    try{
+        await productManager.deleteProductById(id)
+        res.send("producto eliminado")
+    }catch(error){
+        console.log(error)
+        res.send("error al eliminar producto")
+    }
 })
 
 export {productRouter}

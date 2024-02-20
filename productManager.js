@@ -1,11 +1,12 @@
 import { promises as fs } from "fs";
-import path from "path";
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 
 export class ProductManager {
-
     constructor() {
-        this.path = path.join(__dirname, "productlist.json");
-        this.products = [];
+        const currentFileUrl = import.meta.url;
+        const currentFilePath = fileURLToPath(currentFileUrl);
+        this.path = join(dirname(currentFilePath), "productlist.json")
     }
     static id = 0;
 
