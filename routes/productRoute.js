@@ -32,7 +32,7 @@ productRouter.get("/", async(req,res) =>{
 
 productRouter.post("/api/product", async(req,res) =>{
     try{
-        const {title, description, price, thumbnail, code, stock, status, category} = req.body
+        const {title, description, price, thumbnail, code, stock, status = true, category} = req.body
         const post = await productManager.addProduct({title, description, price, thumbnail, code, stock, status, category, id})
         res.json(post)
     }catch(error){
@@ -45,8 +45,8 @@ productRouter.put("/update/:pid", async(req,res) =>{
     const {pid} = req.params
     
     try{
-        const {title, description, price, thumbnail, code, stock, status, category } = req.body
-        const response = await productManager.updateProduct({title, description, price, thumbnail, code, stock, status, category, id})
+        const {title, description, price, thumbnail, code, stock, status = true, category } = req.body
+        const response = await productManager.updateProduct(pid, {title, description, price, thumbnail, code, stock, status, category})
         res.json(response)
     }catch(error){
         console.log(error)
@@ -58,7 +58,7 @@ productRouter.delete("/delete/:pid", async(req,res) =>{
     const {pid} = req.params
 
     try{
-        await productManager.deleteProductById(id)
+        await productManager.deleteProductById(pid)
         res.send("producto eliminado")
     }catch(error){
         console.log(error)
