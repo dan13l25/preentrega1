@@ -4,7 +4,7 @@ import { promises as fs } from "fs";
 export class cartManager {
 
     constructor(){
-        this.path  = cart,json
+        this.path  = "./cart.json"
         this.cart = []
     }
 

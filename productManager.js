@@ -14,7 +14,7 @@ export class ProductManager {
         await fs.writeFile(this.path, JSON.stringify(this.products, null, 2));
     };
 
-    addProduct = async (title, description, price, thumbnail, code, stock, category) => {
+    addProduct = async (title, description, price, thumbnail, code, stock, category, status=true) => {
         ProductManager.id += 1;
     
         if (title && description && price && thumbnail && code && stock && category !== undefined) {
@@ -26,6 +26,7 @@ export class ProductManager {
                 code,
                 category,   
                 stock,
+                status,
                 id: ProductManager.id
             };
             this.products.push(product);
