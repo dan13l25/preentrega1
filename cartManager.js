@@ -1,10 +1,13 @@
-import { json } from "express";
-import { promises as fs } from "fs";
+import { promises as fs } from "fs"
+import { fileURLToPath } from 'url'
+import { dirname, join } from 'path'
 
 export class cartManager {
 
     constructor(){
-        this.path  = "./cart.json"
+        const currentFileUrl = import.meta.url
+        const currentFilePath = fileURLToPath(currentFileUrl)
+        this.path  = join(dirname(currentFilePath), "cart.json")
         this.cart = []
     }
 
